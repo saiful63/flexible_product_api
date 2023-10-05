@@ -28,19 +28,19 @@ class DatabaseSeeder extends Seeder
                 'name'=>'admin',
                 'email'=>'admin@gmail.com',
                 'password'=>bcrypt('password'),
-                'role'=>'admin'
+                'role'=>1
             ],
             [
                 'name'=>'user',
                 'email'=>'user@gmail.com',
                 'password'=>bcrypt('password'),
-                'role'=>'user'
+                'role'=>3
             ],
             [
                 'name'=>'editor',
                 'email'=>'editor@gmail.com',
                 'password'=>bcrypt('password'),
-                'role'=>'editor'
+                'role'=>2
             ]
             ];
 

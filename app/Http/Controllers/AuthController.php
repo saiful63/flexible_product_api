@@ -16,17 +16,7 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function login(Request $request){
-        $request->validate([
-            'email' => 'required',
-            'password'=> 'required'
-        ]);
 
-    if(\Auth::attempt($request->only('email','password')))
-       {return redirect('home');}
-
-    return redirect('login')->withError('Login details are not valid');
-    }
 
     public function register(Request $request){
         $request->validate([
@@ -38,18 +28,62 @@ class AuthController extends Controller
     User::create([
         'name'=>$request->name,
         'email'=>$request->email,
+        'role'=>User::USER,
         'password'=> \Hash::make($request->password)
     ]);
 
     // login user to dashboard
     if(\Auth::attempt($request->only('email','password')))
-       {return redirect('home');}
+       {
+        if(\Auth::user()->role === User::ADMIN){
+            return redirect('home');
+        }else if(\Auth::user()->role === User::EDITOR){
+            //return redirect()->route('home');
+            return redirect('home');
+        }
+        else if(\Auth::user()->role === User::USER){
+            return redirect()->route('normalUserHome');
+        }
+
+       }
 
     return redirect('register')->withError('Error');
     }
 
+
+
+    public function login(Request $request){
+        $request->validate([
+            'email' => 'required',
+            'password'=> 'required'
+        ]);
+
+    if(\Auth::attempt($request->only('email','password')))
+       {
+        if(\Auth::user()->role === User::ADMIN){
+            return redirect('home');
+        }else if(\Auth::user()->role === User::EDITOR){
+            return redirect('home');
+        }
+        else if(\Auth::user()->role === User::USER){
+            return redirect()->route('normalUserHome');
+        }
+       }
+
+    return redirect('login')->withError('Login details are not valid');
+    }
+
+
+
+
+
     public function home(){
         // return view('home');
+        $products = Product::all();
+        return view('Home',compact('products'));
+    }
+
+    public function editorHome(){
         $products = Product::all();
         return view('Home',compact('products'));
     }

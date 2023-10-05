@@ -9,15 +9,7 @@
             @endif
             <div class="card-header">
                 <span>Product List</span>
-                @if(Auth::user()->role=='admin' || Auth::user()->role=='editor')
-                    @else
-                        <span class="added_item">
-                        <a href="{{ route('viewAddedItem') }}">Added item</a>
-                        <span class="added_item_val"></span>
-                        </span>
-                @endif
-
-                @if(Auth::user()->role=='admin')
+                @if(Auth::user()->role === \App\Models\User::ADMIN)
                  <span><a href="{{'/add_info'}}" class="btn btn-primary my-4">Add info</a></span>
                 @endif
                  <a href="{{ route('logout') }}" class="btn btn-danger my-4">Logout</a>
@@ -30,10 +22,8 @@
                             <th>Book Writer</th>
                             <th>Book price</th>
                             <th>Book Image</th>
-                            @if(Auth::user()->role=='admin' || Auth::user()->role=='editor')
+                            @if(Auth::user()->role === \App\Models\User::ADMIN || Auth::user()->role ===\App\Models\User::EDITOR)
                                 <th>Action</th>
-                                @else
-                                <th>Add to cart</th>
                             @endif
 
                         </tr>
@@ -46,21 +36,19 @@
                                 <td>{{ $product->book_name }}</td>
                                 <td>{{ $product->book_writer }}</td>
                                 <td>{{ $product->book_price }}</td>
-                                <td>{{ $product->book_image }}</td>
-                                @cannot('cartItem',$product)
-                                    <td>
-                                    <button class="item_id" data-item_id="{{ $product->id }}" name="product_id" type="submit">Add</button>
-                                    </td>
-                                @endcannot
+                                <td><img src="{{ asset('img/'.$product->book_image) }}" width="10%" alt=""></td>
 
                                 <td>
-                                    @can('update',$product)
-                                      <a class="btn btn-primary" href="{{url('/edit-data/'.$product->id)}}">Edit</a>
-                                    @endcan
+                                    <div class="d-flex">
+                                        @can('update',$product)
+                                           <a class="btn btn-primary m-2" href="{{url('/edit-data/'.$product->id)}}">Edit</a>
+                                        @endcan
 
-                                    @can('delete',$product)
-                                      <a class="btn btn-danger" href="{{url('/delete-data/'.$product->id)}}" onclick = "confirm('Are you want to delete..');">Delete</a>
-                                    @endcan
+                                        @can('delete',$product)
+                                           <a class="btn btn-danger m-2" href="{{url('/delete-data/'.$product->id)}}" onclick = "confirm('Are you want to delete..');">Delete</a>
+                                        @endcan
+                                    </div>
+
                                 </td>
 
 
@@ -72,6 +60,10 @@
 
                     </tbody>
                     </table>
+
+
+
+
                 </div>
             </div>
         </div>

@@ -9,11 +9,12 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
+
 class ProductController extends BaseController
 {
 
     public function index(){
-        $products = Product::all();
+        $products = Product::where('user_id',Auth::user()->id)->get();
         return $this->sendResponse($products->toArray(),'Product retrived');
 
     }

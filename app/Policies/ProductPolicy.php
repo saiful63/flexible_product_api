@@ -39,12 +39,12 @@ class ProductPolicy
     }
     public function cartItem(User $user, Product $product)
     {
-         return $user->role == 'admin' || $user->role == 'editor';
+         return $user->role === User::ADMIN || $user->role === User::EDITOR;
     }
 
     public function addProduct(User $user, Product $product)
     {
-         return $user->role == 'admin';
+         return $user->role === User::ADMIN;
     }
 
     /**
@@ -67,7 +67,7 @@ class ProductPolicy
      */
     public function update(User $user, Product $product)
     {
-        return $user->role == 'admin' || $user->role == 'editor';
+        return $user->role === User::ADMIN || $user->role === User::EDITOR;
     }
 
     /**
@@ -79,7 +79,7 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product)
     {
-        return $user->role == 'admin';
+        return $user->role === User::ADMIN;
     }
 
     /**

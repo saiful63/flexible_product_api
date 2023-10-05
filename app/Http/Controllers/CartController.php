@@ -28,14 +28,6 @@ class CartController extends Controller
         ]);
         }
 
-
-        //return $k;
-
-
-
-
-       //return view('test',compact('c'));
-
     }
 
     public function getCartData(Cart $cart){

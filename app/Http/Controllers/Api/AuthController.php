@@ -38,7 +38,7 @@ class AuthController extends BaseController
 
 
         $success['token'] = $user->createToken('RestApi')->plainTextToken;
-        $success['name'] = $user->name;
+        $success['user_id'] = $user->id;
 
         return $this->sendResponse($success,'User registration successful');
     }
@@ -48,7 +48,7 @@ class AuthController extends BaseController
        $validator = Validator::make($request->all(),[
 
             'email'=>['required','email'],
-            'password'=>['required','min:6'],
+            'password'=>['required'],
 
         ]);
 
@@ -59,7 +59,7 @@ class AuthController extends BaseController
         if(Auth::attempt(['email'=>$request->email,'password'=>$request->password])){
             $user = Auth::user();
             $success['token'] = $user->createToken('RestApi')->plainTextToken;
-            $success['name'] = $user->name;
+            $success['user_id'] = $user->id;
 
             return $this->sendResponse($success,'User Logged in successfully');
         }else{
