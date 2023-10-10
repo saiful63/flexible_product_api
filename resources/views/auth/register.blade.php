@@ -16,7 +16,7 @@
 
                         <form action="{{ route('register') }}" method="post">
                             @csrf
-                            @method('post')
+                            
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" name="name" class="form-control" placeholder="name" />
