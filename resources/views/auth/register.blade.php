@@ -14,9 +14,9 @@
                             <p class="text-danger">{{ Session::get('error') }}</p>
                         @endif
 
-                        <form action="{{ route('register') }}" method="post">
+                        <form action="{{ route('register.data') }}" method="post">
                             @csrf
-                            
+
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" name="name" class="form-control" placeholder="name" />

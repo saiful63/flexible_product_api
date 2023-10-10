@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('login',[AuthController::class,'index'])->name('login');
 Route::post('login',[AuthController::class,'login'])->name('login');
 Route::get('/',[AuthController::class,'register_view'])->name('register');
-Route::post('/',[AuthController::class,'register'])->name('register');
+Route::post('/',[AuthController::class,'register'])->name('register.data');
 
 
 Route::group(['middleware'=>'auth'],function(){
